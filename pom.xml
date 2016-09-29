@@ -13,7 +13,7 @@
 
 	<groupId>com.kenzan.henge</groupId>
 	<artifactId>henge-parent</artifactId>
-	<version>0.9.0</version>
+	<version>0.9.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<url>https://github.com/kenzanmedia/propertiesservice</url>
@@ -126,13 +126,13 @@
 				<groupId>com.kenzan.henge</groupId>
 				<artifactId>henge-domain</artifactId>
 				<scope>compile</scope>
-				<version>0.9.0</version>
+				<version>0.9.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.kenzan.henge</groupId>
 				<artifactId>henge-repository</artifactId>
-				<version>0.9.0</version>
+				<version>0.9.1-SNAPSHOT</version>
 				<scope>compile</scope>
 			</dependency>
 
@@ -140,7 +140,7 @@
 				<groupId>com.kenzan.henge</groupId>
 				<artifactId>henge-service</artifactId>
 				<scope>compile</scope>
-				<version>0.9.0</version>
+				<version>0.9.1-SNAPSHOT</version>
 			</dependency>
 
 			<!-- Spring Boot Dependencies - Use this when not inheriting from the 
