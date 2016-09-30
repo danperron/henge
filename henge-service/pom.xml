@@ -71,6 +71,10 @@
 					<artifactId>jsr311-api</artifactId>
 					<groupId>javax.ws.rs</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>com.sun.jersey</artifactId>
+					<groupId>jersey-core</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
