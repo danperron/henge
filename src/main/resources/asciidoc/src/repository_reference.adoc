@@ -65,7 +65,7 @@ aws_secret_access_key = {Your Secret Access Key Here}
 +
 [source]
 ----
-git clone https://github.com/kenzanlabs/henge.git
+git clone https://github.com/kenzanlabs/henge
 ----
 +
 . Open up */henge/henge-repository/src/main/resources/application-flatfile_s3.yml* in a text editor. Change the property *repository.bucket.name* to the S3 bucket you created, similar to: 
@@ -130,7 +130,7 @@ More information on *cqlsh* is available at the http://docs.datastax.com/en//cql
 +
 [source]
 ----
-git clone https://github.com/kenzanlabs/henge.git
+git clone https://github.com/kenzanmedia/henge.git
 ----
 +
 . Build the application by running the following in the root project folder:

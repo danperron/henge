@@ -168,7 +168,6 @@
 	</build>	
     
     <profiles>
-    
     <profile>
       <id>henge-environment-default</id>
       <activation>
@@ -178,7 +177,6 @@
         <henge.URL>http://localhost:8080/henge/v1/search/helloproperties</henge.URL>
       </properties>
     </profile>
-        
     <profile>
       <id>henge-environment-dev</id>
       <activation>
@@ -191,7 +189,6 @@
         <henge.URL>http://localhost:8080/henge/v1/search/helloproperties?scopes=env=dev</henge.URL>
       </properties>
     </profile>
- 
     <profile>
       <id>henge-environment-prod</id>
       <activation>
@@ -205,5 +202,4 @@
       </properties>
     </profile>
   </profiles>
-    
 </project>

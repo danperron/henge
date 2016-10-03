@@ -1,189 +1,151 @@
 {
-	"variables": [],
-	"info": {
-		"name": "Hello Properties",
-		"_postman_id": "8e11b8bb-25d2-2746-3d08-d71ffaa8676b",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
+	"id": "38d09736-17c8-84ef-a55f-01766fe71318",
+	"name": "Hello Properties",
+	"description": "",
+	"order": [
+		"7ac2eba7-df4a-2085-d55c-192fa51f86d0",
+		"87e61a89-f70e-d1ac-dc88-ffac3862a3fc",
+		"a92dad60-7633-bc61-b07c-79d2627ad3d7",
+		"f733e2be-84da-a294-e242-4af0a5a99d20",
+		"5d1eb20c-a69e-16c5-d0cd-1dce956732ed",
+		"ec00b81f-6931-bdd7-592c-4d8b1d734760",
+		"220f3ff7-744e-7007-0483-ca2e908cd927",
+		"e453ccbf-bce5-db68-79c9-b1fdd73c7a28"
+	],
+	"folders": [],
+	"timestamp": 0,
+	"owner": "915894",
+	"public": false,
+	"published": false,
+	"requests": [
 		{
-			"name": "Henge - Convenience ",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/convenience/batch",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"propertyGroupList\" : [ \r\n        {\r\n          \"name\" : \"helloproperties\",\r\n          \"version\" : \"1.0.0\",\r\n          \"description\" : \"Hello-Properties Application\",\r\n          \"type\" : \"APP\",\r\n          \"active\" : true,\r\n          \"createdDate\" : \"2015-11-23T09:44:51.580\",\r\n          \"properties\" : [ {\r\n            \"name\" : \"helloproperties.message\",\r\n            \"description\" : \"Message property\",\r\n            \"defaultValue\" : \"Some message\",\r\n            \"propertyScopedValues\": [\r\n                {\r\n                  \"value\": \"Hello in Development Environment\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"dev\"\r\n                    }\r\n                  ]\r\n                },\r\n                {\r\n                  \"value\": \"Hello in Production Environment\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"prod\"\r\n                    }\r\n                  ]\r\n                }\r\n              ]\r\n            }, {\r\n                \"name\" : \"helloproperties.name\",\r\n                \"description\" : \"Your name to say Hello!\",\r\n                \"defaultValue\" : \"Igor\",\r\n                \"propertyScopedValues\" : [\r\n                    {\r\n                  \"value\": \"Igor (Development Mode)\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"dev\"\r\n                    }\r\n                  ]\r\n                },\r\n                {\r\n                  \"value\": \"Igor (Production Mode)\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"prod\"\r\n                    }\r\n                  ]\r\n                }    \r\n                ]\r\n          } ]\r\n        }\r\n    ],\r\n    \"versionSetList\" : [\r\n        {\r\n          \"name\": \"HelloVersionSet\",\r\n          \"version\": \"1.0.0\",\r\n          \"description\": null,\r\n          \"propertyGroupReferences\": [\r\n            {\r\n              \"name\": \"helloproperties\",\r\n              \"version\": \"1.0.0\"\r\n            }\r\n          ],   \r\n          \"createdDate\": null,\r\n          \"scopedPropertyValueKeys\": null,\r\n          \"typeHierarchyEnabled\": true\r\n        }    \r\n    ],\r\n    \"mappingList\" : [\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        },\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"scopeString\" : \"env=dev\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        },\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"scopeString\" : \"env=prod\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        }\r\n    ]\r\n}"
-				},
-				"description": ""
-			},
-			"response": []
+			"id": "220f3ff7-744e-7007-0483-ca2e908cd927",
+			"name": "Update Mapping Dev Scope",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"method": "PUT",
+			"headers": "Authorization: Basic dXNlcjp1c2Vy\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n    \"name\": \"HelloVersionSet\",\n    \"version\": \"1.0.1\"\n}",
+			"url": "http://localhost:8080/henge/v1/mapping?application=helloproperties&scopeString=env=dev",
+			"responses": []
 		},
 		{
-			"name": "Hello Property Name",
-			"request": {
-				"url": "http://localhost:9080/hello-properties/v1/sayHello/helloproperties.name",
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "Hello Properties Message",
-			"request": {
-				"url": "http://localhost:9080/hello-properties/v1/displayMessage/helloproperties.message",
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "Update Property Group",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/property-groups/helloproperties",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\" : \"helloproperties\",\r\n  \"version\" : \"1.0.1\",\r\n  \"description\" : \"Hello-Properties Application\",\r\n  \"type\" : \"APP\",\r\n  \"active\" : true,\r\n  \"createdDate\" : \"2015-11-23T09:44:51.580\",\r\n  \"properties\" : [ {\r\n    \"name\" : \"helloproperties.message\",\r\n    \"description\" : \"Message property\",\r\n    \"defaultValue\" : \"Some message - Changed\",\r\n    \"propertyScopedValues\": [\r\n        {\r\n          \"value\": \"Hello in Development Environment - Changed\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"dev\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"value\": \"Hello in Production Environment\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"prod\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }, {\r\n        \"name\" : \"helloproperties.name\",\r\n        \"description\" : \"Your name to say Hello!\",\r\n        \"defaultValue\" : \"Igor - Changed\",\r\n        \"propertyScopedValues\" : [\r\n            {\r\n          \"value\": \"Igor (Development Mode) - Changed\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"dev\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"value\": \"Igor (Production Mode)\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"prod\"\r\n            }\r\n          ]\r\n        }    \r\n        ]\r\n  } ]\r\n}          "
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
+			"id": "5d1eb20c-a69e-16c5-d0cd-1dce956732ed",
 			"name": "Update VersionSet",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/version-sets/HelloVersionSet",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"HelloVersionSet\",\r\n  \"version\": \"1.0.1\",\r\n  \"description\": null,\r\n  \"propertyGroupReferences\": [\r\n    {\r\n      \"name\": \"helloproperties\",\r\n      \"version\": \"1.0.1\"\r\n    }\r\n  ],   \r\n  \"createdDate\": null,\r\n  \"scopedPropertyValueKeys\": null,\r\n  \"typeHierarchyEnabled\": true\r\n}    "
-				},
-				"description": ""
-			},
-			"response": []
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjp1c2Vy",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n  \"name\": \"HelloVersionSet\",\r\n  \"version\": \"1.0.1\",\r\n  \"description\": null,\r\n  \"propertyGroupReferences\": [\r\n    {\r\n      \"name\": \"helloproperties\",\r\n      \"version\": \"1.0.1\"\r\n    }\r\n  ],   \r\n  \"createdDate\": null,\r\n  \"scopedPropertyValueKeys\": null,\r\n  \"typeHierarchyEnabled\": true\r\n}    ",
+			"url": "http://localhost:8080/henge/v1/version-sets/HelloVersionSet",
+			"responses": []
 		},
 		{
-			"name": "Update Mapping",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/mapping?application=helloproperties",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"HelloVersionSet\",\n    \"version\": \"1.0.1\"\n}"
-				},
-				"description": ""
-			},
-			"response": []
+			"id": "7ac2eba7-df4a-2085-d55c-192fa51f86d0",
+			"headers": "Authorization: Basic dXNlcjp1c2Vy\nContent-Type: application/json\n",
+			"url": "http://localhost:8080/henge/v1/convenience/batch",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1473783572884,
+			"name": "Henge - Convenience",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"responses": [],
+			"rawModeData": "{ \r\n    \"propertyGroupList\" : [ \r\n        {\r\n          \"name\" : \"helloproperties\",\r\n          \"version\" : \"1.0.0\",\r\n          \"description\" : \"Hello-Properties Application\",\r\n          \"type\" : \"APP\",\r\n          \"active\" : true,\r\n          \"createdDate\" : \"2015-11-23T09:44:51.580\",\r\n          \"properties\" : [ {\r\n            \"name\" : \"helloproperties.message\",\r\n            \"description\" : \"Message property\",\r\n            \"defaultValue\" : \"Hello. You got Henge properties to work. You rock!\",\r\n            \"propertyScopedValues\": [\r\n                {\r\n                  \"value\": \"Hello. You got Henge properties to work in Dev. You rock!\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"dev\"\r\n                    }\r\n                  ]\r\n                },\r\n                {\r\n                  \"value\": \"Hello. You got Henge properties to work in Prod. You rock!\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"prod\"\r\n                    }\r\n                  ]\r\n                }\r\n              ]\r\n            }, {\r\n                \"name\" : \"helloproperties.name\",\r\n                \"description\" : \"Your name to say Hello!\",\r\n                \"defaultValue\" : \"Merlin\",\r\n                \"propertyScopedValues\" : [\r\n                    {\r\n                  \"value\": \"Merlin (in Dev)\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"dev\"\r\n                    }\r\n                  ]\r\n                },\r\n                {\r\n                  \"value\": \"Merlin (In Prod)\",\r\n                  \"scopeSet\": [\r\n                    {\r\n                      \"key\": \"env\",\r\n                      \"value\": \"prod\"\r\n                    }\r\n                  ]\r\n                }    \r\n                ]\r\n          } ]\r\n        }\r\n    ],\r\n    \"versionSetList\" : [\r\n        {\r\n          \"name\": \"HelloVersionSet\",\r\n          \"version\": \"1.0.0\",\r\n          \"description\": null,\r\n          \"propertyGroupReferences\": [\r\n            {\r\n              \"name\": \"helloproperties\",\r\n              \"version\": \"1.0.0\"\r\n            }\r\n          ],   \r\n          \"createdDate\": null,\r\n          \"scopedPropertyValueKeys\": null,\r\n          \"typeHierarchyEnabled\": true\r\n        }    \r\n    ],\r\n    \"mappingList\" : [\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        },\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"scopeString\" : \"env=dev\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        },\r\n        { \r\n          \"application\" : \"helloproperties\",\r\n          \"scopeString\" : \"env=prod\",\r\n          \"vsReference\" : {\r\n              \"name\": \"HelloVersionSet\",\r\n              \"version\": \"1.0.0\"\r\n          }    \r\n        }\r\n    ]\r\n}"
 		},
 		{
-			"name": "Update Mapping Scopes",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/mapping?application=helloproperties&scopeString=env=dev",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"HelloVersionSet\",\n    \"version\": \"1.0.1\"\n}"
-				},
-				"description": ""
-			},
-			"response": []
+			"id": "87e61a89-f70e-d1ac-dc88-ffac3862a3fc",
+			"name": "Hello Property Name",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"method": "GET",
+			"headers": "",
+			"dataMode": "params",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:9080/hello-properties/v1/sayHello/helloproperties.name",
+			"responses": []
 		},
 		{
+			"id": "a92dad60-7633-bc61-b07c-79d2627ad3d7",
+			"name": "Hello Properties Message",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"method": "GET",
+			"headers": "",
+			"dataMode": "params",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:9080/hello-properties/v1/displayMessage/helloproperties.message",
+			"responses": []
+		},
+		{
+			"id": "e453ccbf-bce5-db68-79c9-b1fdd73c7a28",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjp1c2Vy\n",
+			"url": "http://localhost:8080/henge/v1/search/helloproperties?scopes=env=dev",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1473783458784,
 			"name": "Henge Search",
-			"request": {
-				"url": "http://localhost:8080/henge/v1/search/helloproperties?scopes=env=dev",
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjp1c2Vy",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"description": ""
-			},
-			"response": []
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"responses": []
+		},
+		{
+			"id": "ec00b81f-6931-bdd7-592c-4d8b1d734760",
+			"headers": "Authorization: Basic dXNlcjp1c2Vy\nContent-Type: application/json\n",
+			"url": "http://localhost:8080/henge/v1/mapping?application=helloproperties",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1473783418565,
+			"name": "Update Mapping",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"responses": [],
+			"rawModeData": "{\n    \"name\": \"HelloVersionSet\",\n    \"version\": \"1.0.1\"\n}"
+		},
+		{
+			"id": "f733e2be-84da-a294-e242-4af0a5a99d20",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjp1c2Vy\n",
+			"url": "http://localhost:8080/henge/v1/property-groups/helloproperties",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1475248658966,
+			"name": "Update Property Group",
+			"description": "",
+			"collectionId": "38d09736-17c8-84ef-a55f-01766fe71318",
+			"responses": [],
+			"rawModeData": "{\r\n  \"name\" : \"helloproperties\",\r\n  \"version\" : \"1.0.1\",\r\n  \"description\" : \"Hello-Properties Application\",\r\n  \"type\" : \"APP\",\r\n  \"active\" : true,\r\n  \"createdDate\" : \"2015-11-23T09:44:51.580\",\r\n  \"properties\" : [ {\r\n    \"name\" : \"helloproperties.message\",\r\n    \"description\" : \"Message property\",\r\n    \"defaultValue\" : \"Hello. You UPDATED the version of Henge properties.\",\r\n    \"propertyScopedValues\": [\r\n        {\r\n          \"value\": \"Hello. You UPDATED the version of Henge properties in Dev.\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"dev\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"value\": \"Hello. You UPDATED the version of Henge properties in Prod.\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"prod\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }, {\r\n        \"name\" : \"helloproperties.name\",\r\n        \"description\" : \"Your name to say Hello!\",\r\n        \"defaultValue\" : \"Arthur\",\r\n        \"propertyScopedValues\" : [\r\n            {\r\n          \"value\": \"Arthur (in Development)\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"dev\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"value\": \"Arthur (in Production)\",\r\n          \"scopeSet\": [\r\n            {\r\n              \"key\": \"env\",\r\n              \"value\": \"prod\"\r\n            }\r\n          ]\r\n        }    \r\n        ]\r\n  } ]\r\n}          "
 		}
 	]
 }
