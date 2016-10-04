@@ -13,7 +13,7 @@ Hello Properties is a REST-based Java application that displays messages using H
 The demo below walks through how to start up Hello Properties, how different property values are referenced for the dev and prod environments, and how properties can be dynamically versioned.  
 
 == Loading Properties 
-Before starting Hello Properties, you will need to load properties related to the application into Henge. Make sure you have <<getting_started#getting-started,Henge cloned and built>> and  https://www.getpostman.com/apps[Postman installed] before walking through the steps. 
+Before starting Hello Properties, you will need to load properties related to the application into Henge. Make sure you have <<getting_started#getting-started,Henge cloned and built>> and  https://www.getpostman.com/apps[Postman installed^] before walking through the steps. 
 
 . Within the project root directory, start Henge using a local flatfile repository: 
 +
@@ -28,7 +28,7 @@ mvn -pl henge-service spring-boot:run
 ====
 For more information on what the domain objects do, see <<domain_reference#domain-objects,Domain Objects>>. 
 
-Here we are using Postman to send REST calls, though this could also be done using curl. To view the complete REST API, see the http://localhost:8080/henge/swagger/index.html[Henge Swagger API documentation].  
+Here we are using Postman to send REST calls, though this could also be done using curl. To view the complete REST API, see the http://localhost:8080/henge/swagger/index.html[Henge Swagger API documentation^].  
 ====
 
 
@@ -91,7 +91,7 @@ Outside of Maven profiles, `<archaius.configurationSource.additionalUrls>` could
 ----
 mvn tomcat7:run -Darchaius.configurationSource.additionalUrls=Dhttp://localhost:8080/henge/v1/search/helloproperties?scopes=env=dev
 ----
-For more information on this Archaius system property, see the https://github.com/Netflix/archaius/wiki/Getting-Started[Archaius wiki]. 
+For more information on this Archaius system property, see the https://github.com/Netflix/archaius/wiki/Getting-Started[Archaius wiki^]. 
 ====
 
 == Versioning Properties

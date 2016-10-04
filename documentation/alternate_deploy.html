@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Profiles</title>
+<title>Alternate Methods of Deploying Henge</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,34 +509,14 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body id="profiles" class="article">
+<body id="deploy" class="article">
 <div id="header">
-<h1>Profiles</h1>
+<h1>Alternate Methods of Deploying Henge</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_activating_profiles">1. Activating Profiles</a>
-<ul class="sectlevel2">
-<li><a href="#_specify_an_application_property">1.1. Specify an Application Property</a></li>
-<li><a href="#_use_a_command_line_argument">1.2. Use a Command Line Argument</a></li>
-</ul>
-</li>
-<li><a href="#_henge_profiles">2. Henge Profiles</a>
-<ul class="sectlevel2">
-<li><a href="#_default_profile">2.1. Default Profile</a></li>
-<li><a href="#_dev_profile">2.2. Dev Profile</a></li>
-<li><a href="#_eureka_profile">2.3. Eureka Profile</a></li>
-<li><a href="#_flatfile_local_profile">2.4. Flatfile_local Profile</a></li>
-<li><a href="#_flatfile_s3_profile">2.5. Flatfile_s3 Profile</a></li>
-<li><a href="#_cassandra_profile">2.6. Cassandra Profile</a></li>
-<li><a href="#_metrics_profile">2.7. Metrics Profile</a></li>
-</ul>
-</li>
-<li><a href="#_profile_specific_configurations">3. Profile-Specific Configurations</a>
-<ul class="sectlevel2">
-<li><a href="#_noteworthy_configurations">3.1. Noteworthy Configurations</a></li>
-</ul>
-</li>
+<li><a href="#_deploying_the_jar_on_tomcat">1. Deploying the JAR on Tomcat</a></li>
+<li><a href="#_deploying_the_henge_war_on_tomcat">2. Deploying the Henge WAR on Tomcat</a></li>
 </ul>
 </div>
 </div>
@@ -544,478 +524,87 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Sometimes an application needs to behave differently depending on its context. For example, the application might need to use a different IP address or port number when running in a development environment compared to a production environment.</p>
-</div>
-<div class="paragraph">
-<p>Spring Profiles offer a mechanism for switching configurations or altering how functionality is implemented at runtime. With profiles, you can indicate that parts of your application are available only in a particular context. When a profile is active, the parts of the application that are associated with the profile are available, while parts associated with non-active profiles are not available.</p>
-</div>
-<div class="paragraph">
-<p>To associate classes with a particular profile, use the <code>@Profile</code> annotation. You can use <code>@Profile</code> with any class that uses the <code>@Component</code> or <code>@Configuration</code> annotation. In the following example, the <strong>ProductionConfiguration</strong> class is associated with the <strong>dev</strong> profile:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>@Configuration
-@Profile("dev")
-public class ProductionConfiguration {
-
-    // ...
-
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>By assigning different implementations of a common interface to different profiles, it&#8217;s possible to choose which implementation you want to use at runtime. For example, Henge supports storing properties in a local flat file, an S3 flat file, or a Cassandra database. With profiles, you can choose which storage option to use based on the environment the application is running in.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To learn more about Spring Profiles, see the <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles" target="_blank">Spring Boot documentation</a>.
-</td>
-</tr>
-</table>
+<p>Henge can alternately be deployed directly onto Apache Tomcat using a JAR or WAR file. Before following the instructions, make sure you have <a href="getting_started.html#getting-started">Henge cloned and built</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_activating_profiles">1. Activating Profiles</h2>
+<h2 id="_deploying_the_jar_on_tomcat">1. Deploying the JAR on Tomcat</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Configurations or implementations associated with a profile are only available when the profile is active. There are two ways to activate profiles: specify an application property or use a command line argument.</p>
-</div>
-<div class="sect2">
-<h3 id="_specify_an_application_property">1.1. Specify an Application Property</h3>
-<div class="paragraph">
-<p>You can activate profiles using the <code>spring.profiles.active</code> property. Specify the active profiles with this property in the <strong>application.yml</strong> file. For example:</p>
+<p>The Henge service application uses Spring boot when it builds, and a "fat" jar is generated that contains dependencies inside the archive, including the Tomcat web server. A Tomcat instance will startup with Henge just by running the following in the root project folder:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>spring.profiles.active=dev,cassandra</code></pre>
+<pre class="CodeRay highlight"><code>java -jar henge-service/target/henge-service.jar</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_use_a_command_line_argument">1.2. Use a Command Line Argument</h3>
 <div class="paragraph">
-<p>You can activate profiles when starting the application using a command line argument. Use the switch <code>&#8209;&#8209;spring.profiles.active=profile</code> or the switch <code>&#8209;Dspring.profiles.active=profile</code>. This will override the value of the <code>spring.profiles.active</code> variable. For example:</p>
+<p>The application will now be running on <a href="http://localhost:8080/henge" target="_blank">http://localhost:8080/henge</a> with the default Spring profile, which uses a local flatfile repository. You can change the Tomcat port by adding the option <strong>-Dserver.port=8081</strong> to the command line. For more information regarding configuration see <a href="https://spring.io/blog/2014/03/07/deploying-spring-boot-applications" target="_blank">Deploying Spring Boot Applications</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can also specify the various <a href="profiles_reference.html#profiles">Spring Profiles</a> for running Henge with other options. For instance, to run with flatfiles on S3 as a repository, you would use the command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>mvn -pl property-service spring-boot:run -Dspring.profiles.active=dev,flatfile_local</code></pre>
+<pre class="CodeRay highlight"><code>java -jar -Dspring.profiles.active=dev,flatfile_s3 henge-service/target/henge-service.jar</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Note that to run flatfiles on S3, you would need to make sure your configuration is setup and Henge is built as indicated in the <a href="repository_reference.html#repositories">Repositories</a> section.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_henge_profiles">2. Henge Profiles</h2>
+<h2 id="_deploying_the_henge_war_on_tomcat">2. Deploying the Henge WAR on Tomcat</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Henge uses a number of pre-defined profiles. See the sections below for information about each profile and its configuration variables.</p>
-</div>
-<div class="sect2">
-<h3 id="_default_profile">2.1. Default Profile</h3>
-<div class="paragraph">
-<p>The <strong>default</strong> profile is different from other profiles in that you don&#8217;t have to activate it. Instead, it represents the default configuration contained in the <strong>application.yml</strong> file. Use the <strong>default</strong> profile to set values for running the application in a production environment on AWS.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Default Profile Variables: /henge-domain/src/main/resources/application.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.application.name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application name. Eureka uses this as the name of the client service.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.profiles.active</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The list of active profiles.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.jersey.type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to use Jersey as a Filter or a Servlet. Default value: <code>filter</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">multipart.max-file-size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The upper bound on the size of <code>FileVersion</code> objects that can be stored in Henge.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">server.contextPath</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The context root of the web application.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.api.version</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The version of the Swagger API.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.schemes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of accepted protocols. Example: <code>http,https</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.base.path</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Base path for the Swagger APIs.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.resource.package</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Package from which Swagger must scan for endpoints.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.scan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether Swagger should scan for endpoints. Recommended value: <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The domain where the Swagger UI resides in the production environment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port where the Swagger UI resides in the production environment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cache.expiration.minutes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The time the cache lives after each write to it.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">text.encoding</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The encoding used to convert bytes to text (and vice versa) throughout all repository implementations.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">scope.precedence.configuration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Defines an order, from most generic to most specific, of scope keys. This changes the way the search behaves when the key given does not have an exact match.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">scope.application.name.key</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String that represents the application name in the scope keys.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">eureka.client.serviceUrl.defaultZone</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL used by the discovery client (this application) to register on the Eureka server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host for the Cassandra database server (production environment).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port for the Cassandra database server (production environment).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">security.user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User name for authentication when executing REST requests that are not GET.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">security.password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Password for authentication when executing REST requests that are not GET.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_dev_profile">2.2. Dev Profile</h3>
-<div class="paragraph">
-<p>Use the <strong>dev</strong> profile to set configuration variables for running Henge in a local environment.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Dev Profile Variables: /henge-domain/src/main/resources/application-dev.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The domain where the Swagger UI resides in the production environment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">swagger.port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port where the Swagger UI resides in the production environment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">eureka.client.serviceUrl.defaultZone</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL used by the discovery client (this application) to register on the Eureka server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host for the Cassandra database server (production environment).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port for the Cassandra database server (production environment).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_eureka_profile">2.3. Eureka Profile</h3>
-<div class="paragraph">
-<p>Use the <strong>eureka</strong> profile to enable Eureka as the discovery service. Enabling Eureka provides support for running clustered instances of Henge. See <a href="service_reference.html#eureka-registry">Eureka Registry and Discovery Service</a> for more information.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The <strong>eureka</strong> profile does not use any configuration variables. It is used in the <strong>EurekaClientConfig</strong> class located in: <strong>/henge&#8209;service/src/main/java/com/kenzan/henge/config/EurekaClientConfig.java</strong>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_flatfile_local_profile">2.4. Flatfile_local Profile</h3>
-<div class="paragraph">
-<p>Use the <strong>flatfile_local</strong> profile to enable local storage of the flatfile implementation of the repositories.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. Flatfile_local Profile Variables: /henge-repository/src/main/resources/application-flatfile_local.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">repository.location</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The folder, relative to the user home, where the application data is stored.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">versionset.mapping.file.name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the file where the mapping from <code>Scope</code> objects to <code>VersionSet</code> objects is stored.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_flatfile_s3_profile">2.5. Flatfile_s3 Profile</h3>
-<div class="paragraph">
-<p>Use the  <strong>flatfile_s3</strong> profile to enable Amazon S3 storage of the flatfile implementation of the repositories.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. Flatfile_s3 Profile Variables: /henge-repository/src/main/resources/application-flatfile_s3.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">repository.bucket.name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Amazon S3 bucket where the application data is stored.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">amazon.profile.name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Amazon AWS profile, inside the credentials file, associated with Henge.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">versionset.mapping.file.name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the file where the mapping from <code>Scope</code> objects to <code>VersionSet</code> objects will be stored.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_cassandra_profile">2.6. Cassandra Profile</h3>
-<div class="paragraph">
-<p>Use the <strong>cassandra</strong> profile to enable Cassandra database implementation of the repositories.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Cassandra Profile Variables: /henge-repository/src/main/resources/application-cassandra.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.keyspace</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name for the Cassandra keyspace. The name is defined here and is used by all environments.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_metrics_profile">2.7. Metrics Profile</h3>
-<div class="paragraph">
-<p>Use the <strong>metrics</strong> profile to enable the publishing of Henge metrics. When the <strong>metrics</strong> profile is active, Henge publishes metrics data to the InfluxDB database. You can then display the metrics on a Grafana dashboard, with real-time charts that update every five seconds by default. The charts include information about load and latency, as well as the application endpoints. See <a href="metrics_reference.html#metrics">Metrics</a> for more information.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. Metrics Profile Variables: /henge-service/src/main/resources/application-metrics.yml</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variable</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IP address of the InfluxDB database where metrics are stored.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.port</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Port number of the InfluxDB database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User name for connecting to the InfluxDB database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Password for connecting to the InfluxDB database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the InfluxDB database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.influx.periodInSeconds</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The period for publishing  metrics. For example, a value of <strong>5</strong> means that metrics are sent to InfluxDB every 5 seconds.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_profile_specific_configurations">3. Profile-Specific Configurations</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For each profile, there are specific configuration variables you can set, as described in the section above. Edit the values for these variables in the  <strong>src/main/resources/application-{profile}.yml</strong> configuration file in each module.</p>
-</div>
-<div class="paragraph">
-<p>Most (but not all) modules in the project include a configuration file. We attempted to place each configuration file where it made the most sense. For example, the <strong>application-flatfile_local.yml</strong> configuration file is located in the <strong>henge-repository</strong> module.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-See the tables in the section above for the location of each profile-specific configuration file.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_noteworthy_configurations">3.1. Noteworthy Configurations</h3>
-<div class="paragraph">
-<p>Below are some configuration variables worthy of special attention.</p>
-</div>
-<div class="sect3">
-<h4 id="_flatfile_local_profile_2">3.1.1. Flatfile_local Profile</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><strong>repository.location</strong></dt>
-<dd>
-<p>The folder where the application data is stored.</p>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-The <code>repository.location</code> folder is relative to the user home folder.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The Maven build process automatically creates the folder defined for <code>repository.location</code>.
-</td>
-</tr>
-</table>
-</div>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_flatfile_s3_profile_2">3.1.2. Flatfile_s3 Profile</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><strong>amazon.profile.name</strong></dt>
-<dd>
-<p>The name of the Amazon AWS profile associated with Henge. The default value is <strong>henge</strong>. The specified profile must be present inside your <strong>~/.aws/credentials</strong> file. For example:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download Tomcat at <a href="http://tomcat.apache.org" target="_blank">http://tomcat.apache.org</a>. Extract the archive file into a directory.</p>
+</li>
+<li>
+<p>In a terminal, change your directory to the Tomcat directory you extracted to. Start Tomcat with:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[henge]
-aws_access_key_id={key}
-aws_secret_access_key={secret_key}</code></pre>
+<pre class="CodeRay highlight"><code>bin/startup.sh</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Make sure the credentials given have read and write access to the S3 bucket where the data is stored.
-</td>
-</tr>
-</table>
-</div>
-</dd>
-<dt class="hdlist1"><strong>repository.bucket.name</strong></dt>
-<dd>
-<p>The name of the Amazon S3 bucket where the application data is stored.</p>
-</dd>
-</dl>
+</li>
+<li>
+<p>Copy the <strong>henge/henge-war/target/henge.war</strong> to the <strong>&lt;tomcat-dir&gt;/webapps</strong> directory.</p>
+</li>
+<li>
+<p>Within the Tomcat root directory, restart Tomcat by executing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>bin/shutdown.sh
+bin/startup.sh</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>The Henge application should now be running at <a href="http://localhost:8080/henge" target="_blank">http://localhost:8080/henge</a>, where it displays a simple web page. The application is running with the default Spring profile which uses a local flatfile repository.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can also specify the various <a href="profiles_reference.html#profiles">Henge Spring Profiles</a> by setting these up in JAVA_OPTS. For instance, to run with flatfiles on S3 as a repository, before starting up Tomcat you would use the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>export JAVA_OPTS=-Dspring.profiles.active=dev,flatfile_s3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that to run flatfiles on S3, you would need to make sure your configuration is setup and Henge is built as indicated in the <a href="repository_reference.html#repositories">Repositories</a> section.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-03 16:42:40 MDT
+Last updated 2016-10-03 16:32:32 MDT
 </div>
 </div>
 </body>

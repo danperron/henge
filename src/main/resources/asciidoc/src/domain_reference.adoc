@@ -42,7 +42,7 @@ library or dependency of your project. This distinction is used when evaluating 
 
 An example of a `PropertyGroup` might be a configuration for a database connection. For this `PropertyGroup` you need `Property` values for *host*, *port*, *username* and *password*. Let's assume you have *dev*, *test* and *prod* environments where the values for these properties may be different. You would define a `PropertyGroup` with four properties. Each property would have three `propertyScopedValues` and a `defaultValue`. The following is a JSON representation of this example:
 
-[source, JSON]
+[source]
 ----
 {
 	"name": "dbconfig",
@@ -53,10 +53,10 @@ An example of a `PropertyGroup` might be a configuration for a database connecti
 	"properties": [{
 		"name": "dbhost",
 		"description": "Ip of database host",
-		"defaultValue": "localhost", # <3>
+		"defaultValue": "localhost", # //<3>
         "propertyScopedValues": [{
-			"key": "env=dev", # <1>
-			"value": "127.0.0.1" # <2>
+			"key": "env=dev", # //<1>
+			"value": "127.0.0.1" # //<2>
 		}, {
 			"key": "env=test",
 			"value": "192.168.0.10"
@@ -67,7 +67,7 @@ An example of a `PropertyGroup` might be a configuration for a database connecti
 	}, {
 		"name": "dbport",
 		"description": "Port of database",
-		"defaultValue": "4321" # <4>
+		"defaultValue": "4321" # //<4>
 	}, {
 		"name": "dbuser",
 		"description": "Username for connecting to database",
@@ -120,7 +120,7 @@ Each `Property` can define one or more scope sets, where a specific property val
 
 As an example, let's say you have an application that has a URL that can be different based on the environment, the region, and a hostname. Within the `PropertyGroup` you would define various `scopeSets` under `propertyScopedValues` as shown in the following JSON example.  
 
-[source, JSON]
+[source]
 ----
 {
     "active": true,
@@ -131,13 +131,13 @@ As an example, let's say you have an application that has a URL that can be diff
             "name": "eventlogger.url",
             "propertyScopedValues": [
                 {
-                    "scopeSet": [ <1>
+                    "scopeSet": [ //<1>
                         {
                             "key": "env",
                             "value": "dev"
                         }
                     ],
-                    "value": "www.dev-website.com" <2>  
+                    "value": "www.dev-website.com" //<2>  
                 },
                 {
                     "scopeSet": [
@@ -150,7 +150,7 @@ As an example, let's say you have an application that has a URL that can be diff
                             "value": "us-west-2"
                         }
                     ],
-                    "value": "us-west-2.dev-website.com" <3> 
+                    "value": "us-west-2.dev-website.com" //<3> 
                 },
                 {
                     "scopeSet": [
@@ -159,7 +159,7 @@ As an example, let's say you have an application that has a URL that can be diff
                             "value": "localhost"
                         }
                     ],
-                    "value": "localhost:8080" <4> 
+                    "value": "localhost:8080" //<4> 
                 }
             ]
         }
@@ -208,7 +208,7 @@ Henge can also be used to store configuration files that cannot be translated to
 * *modifiedDate*
 
 Here is an example of `FileVersion` in JSON format: 
-[source, JSON]
+[source]
 ----
 {
   "name": "GeoLoc",
@@ -246,7 +246,7 @@ When a `VersionSet` is returned by a query to Henge, it is processed and all the
 
 Here is an example of a `VersionSet` in JSON format:
 
-[source, JSON]
+[source]
 ----
 {
 	"name": "ExampleVersionSet",
@@ -261,7 +261,7 @@ Here is an example of a `VersionSet` in JSON format:
 		"version": "1.0.0"
 	}, {
 		"name": "some-other-property-group",
-		"version": "latest" # <1>
+		"version": "latest" # //<1>
 	}]
 }
 ---- 
@@ -275,25 +275,25 @@ creating a `Mapping` entry, which binds an application and a set of `Scopes` to 
 
 A `Mapping` entry is created with REST parameters that include an *application* (required), a *scopeString* that defines the set of scopes (optional), and a *body* that indicates the name and version of the `VersionSet`. So for instance, you could create a `Mapping` with this URL request indicating the application and scopes:  
 
-[source, JSON]
+[source]
 ----
 http://localhost:8080/henge/v1/mapping?application=loginApp&scopeString=env=prod,stack=financeWebStack
 ----
 
 And this body indicating the `VersionSet`: 
 
-[source, JSON]
+[source]
 ----
 {
   "name": "VersionSet-1",
-  "version": "1.0.0" <1>
+  "version": "1.0.0" //<1>
 }
 ----
 <1> The version could also be specified as "latest", in which case it will always point to the highest version number for that `VersionSet`. 
 
 The `Mapping` is stored as a JSON object where the *application* itself is a scope, as shown: 
 
-[source, JSON]
+[source]
 ----
 
 {
@@ -310,6 +310,3 @@ Using the `search` endpoint, a complete set of properties is retrieved by provid
 ----
 http://localhost:8080/henge/v1/search/loginApp?scopes=env=prod,stack=financeWebStack
 ----
-
-
-

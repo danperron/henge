@@ -8,7 +8,7 @@ Henge - REST Endpoints
 
 
 
-**Version** 0.0.1-SNAPSHOT
+**Version** 0.9.1-SNAPSHOT
 
 [**Terms of Service**]()
 
@@ -26,12 +26,17 @@ Henge - REST Endpoints
 # APIs
 
 
-## /v1/property-groups
+## /v1/convenience/batch
 
 
-### GET
 
-<a id="search">Search for PropertyGroup(s).</a>
+
+
+
+### POST
+
+
+<a id="batchInsert">Creates PropertyGroup, VersionSet and MappingGroup</a>
 
 
 
@@ -61,11 +66,25 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>searchString</th>
-    <td>query</td>
+    <th>body</th>
+    <td>body</td>
     <td>yes</td>
-    <td>search string</td>
+    <td>Request body with PropertyGroup, VersionSet and MappingGroup</td>
     <td> - </td>
+
+    <td>
+    
+    <a href="#/definitions/Group">Group</a> 
+    </td>
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
 
     
             <td>string </td>
@@ -73,41 +92,81 @@ Henge - REST Endpoints
 
 </tr>
 
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/current/{fileVersionName}
+
+
+### GET
+
+<a id="getCurrentVersion">Get the current version of a specific FileVersion.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
 <tr>
-    <th>pageSize</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page size</td>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
     <td> - </td>
 
     
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>pageNumber</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page number</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>sortColumns</th>
-    <td>query</td>
-    <td>no</td>
-    <td>sort columns</td>
-    <td> - </td>
-
-    
-            <td>Array[string] (csv)</td>
+            <td>string </td>
     
 
 </tr>
@@ -137,12 +196,1273 @@ Henge - REST Endpoints
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 200    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/current/{fileVersionName}/{fileVersionVersion}
+
+
+
+
+### PUT
+
+<a id="setCurrentVersion">Set the current version of a specific FileVersion.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>fileVersionVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/update
+
+
+
+
+### PUT
+
+<a id="update">Update the file by FileVersion name and version. </a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** multipart/form-data
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/upload
+
+
+
+
+
+
+### POST
+
+
+<a id="upload">Upload a File.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** multipart/form-data
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>multipart/form-data</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/{fileVersionName}
+
+
+### GET
+
+<a id="download">Download the latest version of a FileVersion by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/octet-stream
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+### DELETE
+
+<a id="delete">Delete all versions of a FileVersion by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 204    | SUCCESS | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/{fileVersionName}/versions
+
+
+### GET
+
+<a id="versions">Return a set of version numbers associated with a FileVersion by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/{fileVersionName}/versions/ceiling
+
+
+### GET
+
+<a id="readLatestVersionNumber">Read the latest version number of a FileVersion by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>plain/text</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** plain/text
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/{fileVersionName}/versions/{fileVersionVersion}
+
+
+### GET
+
+<a id="download">Download the file by FileVersion name and version. </a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>fileVersionVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/octet-stream
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+### DELETE
+
+<a id="delete">Delete a FileVersion by name and version.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>fileVersionName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>fileVersionVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>fileVersionVersion</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/FileVersion">FileVersion</a>|
+| 204    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/files/{versionSetName}/{versionSetVersion}/{fileName}
+
+
+### GET
+
+<a id="downloadFromVersionSet">Download the file by VersionSet name, VersionSet version and file name</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>versionSetName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>versionSetVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>fileName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/octet-stream
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/mapping
+
+
+### GET
+
+<a id="readAllMappings">Retrieves the list of all the Mapping entries.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+### PUT
+
+<a id="setMapping">Creates a new entry or updates an existing one in the Mapping of Scopes to VersionSetReferences.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>application</th>
+    <td>query</td>
+    <td>no</td>
+    <td>application</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>scopeString</th>
+    <td>query</td>
+    <td>no</td>
+    <td>scopeString</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>body</th>
+    <td>body</td>
+    <td>no</td>
+    <td></td>
+    <td> - </td>
+
+    <td>
+    
+    <a href="#/definitions/VersionSetReference">VersionSetReference</a> 
+    </td>
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 203    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+### DELETE
+
+<a id="deleteMapping">Removes the entry from the Mapping of Scopes to VersionSetReferences.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>application</th>
+    <td>query</td>
+    <td>no</td>
+    <td>application</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>scopeString</th>
+    <td>query</td>
+    <td>no</td>
+    <td>scopeString</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 203    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/property-groups
 
 
 
@@ -221,8 +1541,9 @@ Henge - REST Endpoints
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -240,503 +1561,14 @@ Henge - REST Endpoints
 
 
 
-## /v1/property-groups/${groupId}/versions
-
-
-### GET
-
-<a id="versions">Return a set of version numbers associated with a PropertyGroup based on a PropertyGroupId.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>groupId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>groupId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/property-groups/${groupId}/versions/${version}
-
-
-### GET
-
-<a id="exportPropertyGroup">Export a PropertyGroup which can be imported into another instance of Henge.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>groupId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>groupId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>version</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>version</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>includeScopeSchema</th>
-    <td>query</td>
-    <td>no</td>
-    <td>includeScopeSchema</td>
-    <td> - </td>
-
-    
-            <td>boolean </td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/property-groups/import
-
-
-
-
-
-
-### POST
-
-
-<a id="importPropertyGroup">Import a PropertyGroup which was exported from another instance of Henge.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/PropertyGroup">PropertyGroup</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/property-groups/import-legacy
-
-
-
-
-
-
-### POST
-
-
-<a id="importLegacyPropertyGroup">Import a legacy PropertyGroup which was Exported from the legacy ConfigMiddle service.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/LegacyPropertyGroup">LegacyPropertyGroup</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/property-groups/{propertyGroupId}
-
-
-### GET
-
-<a id="read">Read a PropertyGroup based on PropertyGroupId.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>propertyGroupId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>propertyGroupId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
+## /v1/property-groups/{propertyGroupName}
 
 
 
 
 ### PUT
 
-<a id="update">Update a PropertyGroup.</a>
+<a id="update">Update a PropertyGroup by name.</a>
 
 
 
@@ -766,14 +1598,14 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>propertyGroupId</th>
+    <th>propertyGroupName</th>
     <td>path</td>
     <td>yes</td>
-    <td>propertyGroupId</td>
+    <td>propertyGroupName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
     
 
 </tr>
@@ -817,9 +1649,187 @@ Henge - REST Endpoints
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 203    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+### DELETE
+
+<a id="delete">Delete a PropertyGroup by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>propertyGroupName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>propertyGroupName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 204    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/property-groups/{propertyGroupName}/versions
+
+
+### GET
+
+<a id="versions">Return a set of version numbers associated with a PropertyGroup by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>propertyGroupName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>propertyGroupName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -829,9 +1839,23 @@ Henge - REST Endpoints
 
 
 
-### DELETE
 
-<a id="delete">Delete a PropertyGroup by PropertyGroupId.</a>
+
+
+
+
+
+
+
+
+
+
+## /v1/property-groups/{propertyGroupName}/versions/ceiling
+
+
+### GET
+
+<a id="readLatestVersionNumber">Gets the latest version number of a PropertyGroup by name. </a>
 
 
 
@@ -861,14 +1885,111 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>propertyGroupId</th>
+    <th>propertyGroupName</th>
     <td>path</td>
     <td>yes</td>
-    <td>propertyGroupId</td>
+    <td>propertyGroupName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>plain/text</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** plain/text
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/property-groups/{propertyGroupName}/versions/latest
+
+
+### GET
+
+<a id="readLatest">Get the latest PropertyGroup.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>propertyGroupName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>propertyGroupName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
     
 
 </tr>
@@ -899,8 +2020,10 @@ Henge - REST Endpoints
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -915,12 +2038,18 @@ Henge - REST Endpoints
 
 
 
-## /v1/property-groups/{propertyGroupId}/properties
+
+
+
+
+
+
+## /v1/property-groups/{propertyGroupName}/versions/{propertyGroupVersion}
 
 
 ### GET
 
-<a id="search">Search for Property(s).</a>
+<a id="read">Get a PropertyGroup by name and version. </a>
 
 
 
@@ -950,10 +2079,10 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>searchString</th>
-    <td>query</td>
+    <th>propertyGroupName</th>
+    <td>path</td>
     <td>yes</td>
-    <td>search string</td>
+    <td>propertyGroupName</td>
     <td> - </td>
 
     
@@ -963,40 +2092,14 @@ Henge - REST Endpoints
 </tr>
 
 <tr>
-    <th>pageSize</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page size</td>
+    <th>propertyGroupVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>propertyGroupName</td>
     <td> - </td>
 
     
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>pageNumber</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page number</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>sortColumns</th>
-    <td>query</td>
-    <td>no</td>
-    <td>sort columns</td>
-    <td> - </td>
-
-    
-            <td>Array[string] (csv)</td>
+            <td>string </td>
     
 
 </tr>
@@ -1026,305 +2129,15 @@ Henge - REST Endpoints
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Property">Property</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 200    | SUCCESS | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
 
-
-
-
-
-
-### POST
-
-
-<a id="create">Create a Property.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>propertyGroupId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>propertyGroupId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/Property">Property</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Property">Property</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/property-groups/{propertyGroupId}/properties/{propertyId}
-
-
-### GET
-
-<a id="read">Read a Property based on PropertyId.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>propertyId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>propertyId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Property">Property</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-### PUT
-
-<a id="update">Update a Property.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>propertyGroupId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>propertyGroupId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>propertyId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>propertyId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/Property">Property</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Property">Property</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
 
 
 
@@ -1334,7 +2147,7 @@ Henge - REST Endpoints
 
 ### DELETE
 
-<a id="delete">Delete a Property by PropertyId.</a>
+<a id="delete">Delete a PropertyGroup by name and version.</a>
 
 
 
@@ -1364,14 +2177,27 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>propertyId</th>
+    <th>propertyGroupName</th>
     <td>path</td>
     <td>yes</td>
-    <td>propertyId</td>
+    <td>propertyGroupName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>propertyGroupVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>propertyGroupVersion</td>
+    <td> - </td>
+
+    
+            <td>string </td>
     
 
 </tr>
@@ -1401,9 +2227,12 @@ Henge - REST Endpoints
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Property">Property</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 200    | successful operation | <a href="#/definitions/PropertyGroup">PropertyGroup</a>|
+| 204    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -1418,12 +2247,12 @@ Henge - REST Endpoints
 
 
 
-## /v1/scope-schemas
+## /v1/search/{application}
 
 
 ### GET
 
-<a id="search">Search for ScopeSchema(s).</a>
+<a id="findMatches">Gets the Application properties and internal libraries properties within given precedence scopes. </a>
 
 
 
@@ -1436,7 +2265,6 @@ Henge - REST Endpoints
 #### Request
 
 
-**Content-Type: ** application/json
 
 ##### Parameters
 
@@ -1453,487 +2281,10 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>searchString</th>
-    <td>query</td>
-    <td>no</td>
-    <td>search string</td>
-    <td> - </td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-<tr>
-    <th>pageSize</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page size</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>pageNumber</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page number</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>sortColumns</th>
-    <td>query</td>
-    <td>no</td>
-    <td>sort columns</td>
-    <td> - </td>
-
-    
-            <td>Array[string] (csv)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/ScopeSchema">ScopeSchema</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-### POST
-
-
-<a id="create">Create a ScopeSchema.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/ScopeSchema">ScopeSchema</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/ScopeSchema">ScopeSchema</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/scope-schemas/{scopeSchemaId}
-
-
-### GET
-
-<a id="read">Read a ScopeSchema based on ID.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeSchemaId</th>
+    <th>application</th>
     <td>path</td>
     <td>yes</td>
-    <td>scopeSchemaId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/ScopeSchema">ScopeSchema</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-### PUT
-
-<a id="update">Update a ScopeSchema.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeSchemaId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeSchemaId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/ScopeSchema">ScopeSchema</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/ScopeSchema">ScopeSchema</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-### DELETE
-
-<a id="delete">Delete a ScopeSchema.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeSchemaId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeSchemaId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/ScopeSchema">ScopeSchema</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/scope-schemas/{scopeSchemaId}/scopes
-
-
-### GET
-
-<a id="search">Search for Scope(s).</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>searchString</th>
-    <td>query</td>
-    <td>yes</td>
-    <td>search string</td>
+    <td>application</td>
     <td> - </td>
 
     
@@ -1943,40 +2294,27 @@ Henge - REST Endpoints
 </tr>
 
 <tr>
-    <th>pageSize</th>
+    <th>scopes</th>
     <td>query</td>
     <td>no</td>
-    <td>page size</td>
+    <td>scopes</td>
     <td> - </td>
 
     
-            <td>integer (int32)</td>
+            <td>string </td>
     
 
 </tr>
 
 <tr>
-    <th>pageNumber</th>
+    <th>libs</th>
     <td>query</td>
     <td>no</td>
-    <td>page number</td>
+    <td>libs</td>
     <td> - </td>
 
     
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>sortColumns</th>
-    <td>query</td>
-    <td>no</td>
-    <td>sort columns</td>
-    <td> - </td>
-
-    
-            <td>Array[string] (csv)</td>
+            <td>string </td>
     
 
 </tr>
@@ -2001,14 +2339,16 @@ Henge - REST Endpoints
 
 #### Response
 
-**Content-Type: ** application/json
+**Content-Type: ** text/plain
 
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Scope">Scope</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 200    | SUCCESS | <a href="#/definitions/Response">Response</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -2017,362 +2357,6 @@ Henge - REST Endpoints
 
 
 
-
-### POST
-
-
-<a id="create">Create a Scope.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeSchemaId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeSchemaId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/Scope">Scope</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Scope">Scope</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/scope-schemas/{scopeSchemaId}/scopes/{scopeId}
-
-
-### GET
-
-<a id="read">Read a Scope based on ID.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Scope">Scope</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-### PUT
-
-<a id="update">Update a Scope.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>body</th>
-    <td>body</td>
-    <td>no</td>
-    <td></td>
-    <td> - </td>
-
-    <td>
-    
-    <a href="#/definitions/Scope">Scope</a> 
-    </td>
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Scope">Scope</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
-
-
-
-
-
-
-### DELETE
-
-<a id="delete">Delete a Scope.</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>scopeId</th>
-    <td>path</td>
-    <td>yes</td>
-    <td>scopeId</td>
-    <td> - </td>
-
-    
-            <td>integer (int64)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/Scope">Scope</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
 
 
 
@@ -2386,122 +2370,6 @@ Henge - REST Endpoints
 
 
 ## /v1/version-sets
-
-
-### GET
-
-<a id="search">Search for VersionSet(s).</a>
-
-
-
-
-
-
-
-
-
-#### Request
-
-
-**Content-Type: ** application/json
-
-##### Parameters
-
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Located in</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th>Default</th>
-        <th>Schema</th>
-    </tr>
-
-
-
-<tr>
-    <th>searchString</th>
-    <td>query</td>
-    <td>yes</td>
-    <td>search string</td>
-    <td> - </td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-<tr>
-    <th>pageSize</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page size</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>pageNumber</th>
-    <td>query</td>
-    <td>no</td>
-    <td>page number</td>
-    <td> - </td>
-
-    
-            <td>integer (int32)</td>
-    
-
-</tr>
-
-<tr>
-    <th>sortColumns</th>
-    <td>query</td>
-    <td>no</td>
-    <td>sort columns</td>
-    <td> - </td>
-
-    
-            <td>Array[string] (csv)</td>
-    
-
-</tr>
-
-<tr>
-    <th>ACCEPT</th>
-    <td>header</td>
-    <td>yes</td>
-    <td>ACCEPT</td>
-    <td>application/json</td>
-
-    
-            <td>string </td>
-    
-
-</tr>
-
-
-</table>
-
-
-
-#### Response
-
-**Content-Type: ** application/json
-
-
-| Status Code | Reason      | Response Model |
-|-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
-| 409    | CONFLICT |  - |
-| 500    | INTERNAL SERVER ERROR |  - |
-
 
 
 
@@ -2580,8 +2448,9 @@ Henge - REST Endpoints
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -2599,12 +2468,12 @@ Henge - REST Endpoints
 
 
 
-## /v1/version-sets/{id}
+## /v1/version-sets/{versionSetName}
 
 
 ### GET
 
-<a id="read">Read a VersionSet based on ID.</a>
+<a id="read">Read the latest version of a VersionSet by name.</a>
 
 
 
@@ -2634,14 +2503,14 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>versionSetId</th>
+    <th>versionSetName</th>
     <td>path</td>
     <td>yes</td>
-    <td>versionSetId</td>
+    <td>versionSetName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
     
 
 </tr>
@@ -2672,29 +2541,13 @@ Henge - REST Endpoints
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## /v1/version-sets/{versionSetId}
 
 
 
@@ -2731,14 +2584,14 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>versionSetId</th>
+    <th>versionSetName</th>
     <td>path</td>
     <td>yes</td>
-    <td>versionSetId</td>
+    <td>versionSetName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
     
 
 </tr>
@@ -2782,9 +2635,12 @@ Henge - REST Endpoints
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 200    | successful operation | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 203    | SUCCESS |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -2826,14 +2682,106 @@ Henge - REST Endpoints
 
 
 <tr>
-    <th>versionSetId</th>
+    <th>versionSetName</th>
     <td>path</td>
     <td>yes</td>
-    <td>versionSetId</td>
+    <td>versionSetName</td>
     <td> - </td>
 
     
-            <td>integer (int64)</td>
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 204    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/version-sets/{versionSetName}/versions
+
+
+### GET
+
+<a id="versions">Return a set of version numbers associated with a VersionSet by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>versionSetName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
     
 
 </tr>
@@ -2864,8 +2812,316 @@ Henge - REST Endpoints
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
 | 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
-| 400    | BAD REQUEST |  - |
-| 401    | UNAUTHORIZED |  - |
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/version-sets/{versionSetName}/versions/ceiling
+
+
+### GET
+
+<a id="readLatestVersionNumber">Read the latest version number of a VersionSet by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>versionSetName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>plain/text</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** plain/text
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/version-sets/{versionSetName}/versions/{versionSetVersion}
+
+
+### GET
+
+<a id="read">Get a VersionSet by name and version. </a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>versionSetName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>versionSetVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
+| 409    | CONFLICT |  - |
+| 500    | INTERNAL SERVER ERROR |  - |
+
+
+
+
+
+
+
+
+
+### DELETE
+
+<a id="delete">Delete a VersionSet by name.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>versionSetName</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetName</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>versionSetVersion</th>
+    <td>path</td>
+    <td>yes</td>
+    <td>versionSetVersion</td>
+    <td> - </td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+<tr>
+    <th>ACCEPT</th>
+    <td>header</td>
+    <td>yes</td>
+    <td>ACCEPT</td>
+    <td>application/json</td>
+
+    
+            <td>string </td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 204    | SUCCESS | <a href="#/definitions/VersionSet">VersionSet</a>|
+| 400    | INVALID REQUEST |  - |
+| 401    | UNAUTHENTICATED |  - |
+| 403    | UNAUTHORIZED |  - |
+| 404    | NOT FOUND |  - |
 | 409    | CONFLICT |  - |
 | 500    | INTERNAL SERVER ERROR |  - |
 
@@ -2922,7 +3178,98 @@ Henge - REST Endpoints
     
 </table>
 
-## <a name="/definitions/LegacyProperty">LegacyProperty</a>
+## <a name="/definitions/FileVersion">FileVersion</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>name</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Unique property-group name.</td>
+            <td>pet-store-edge</td>
+        </tr>
+    
+        <tr>
+            <td>version</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Revision number of this entity.</td>
+            <td>1.1.0</td>
+        </tr>
+    
+        <tr>
+            <td>description</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>File description.</td>
+            <td>Attached csv format file on property group.</td>
+        </tr>
+    
+        <tr>
+            <td>content</td>
+            <td>
+                
+                
+                array[string]
+                
+            </td>
+            <td>required</td>
+            <td>The content file in bytes.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>filename</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>createdDate</td>
+            <td>
+                
+                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/FileVersionReference">FileVersionReference</a>
 
 <table border="1">
     <tr>
@@ -2947,86 +3294,6 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>description</td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>type</td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>legacyScopedPropertyValues</td>
-            <td>
-                
-                
-                    array[<a href="#/definitions/LegacyScopedPropertyValue">LegacyScopedPropertyValue</a>]
-                
-                
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-</table>
-
-## <a name="/definitions/LegacyPropertyGroup">LegacyPropertyGroup</a>
-
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th>type</th>
-        <th>required</th>
-        <th>description</th>
-        <th>example</th>
-    </tr>
-    
-        <tr>
-            <td>key</td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>type</td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
             <td>version</td>
             <td>
                 
@@ -3039,24 +3306,9 @@ Henge - REST Endpoints
             <td></td>
         </tr>
     
-        <tr>
-            <td>legacyProperties</td>
-            <td>
-                
-                
-                    array[<a href="#/definitions/LegacyProperty">LegacyProperty</a>]
-                
-                
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
 </table>
 
-## <a name="/definitions/LegacyScopedPropertyValue">LegacyScopedPropertyValue</a>
+## <a name="/definitions/Group">Group</a>
 
 <table border="1">
     <tr>
@@ -3068,11 +3320,13 @@ Henge - REST Endpoints
     </tr>
     
         <tr>
-            <td>key</td>
+            <td>versionSetList</td>
             <td>
                 
-                    
-                    string
+                
+                    array[<a href="#/definitions/VersionSet">VersionSet</a>]
+                
+                
                 
             </td>
             <td>optional</td>
@@ -3081,11 +3335,28 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>value</td>
+            <td>propertyGroupList</td>
             <td>
                 
-                    
-                    string
+                
+                    array[<a href="#/definitions/PropertyGroup">PropertyGroup</a>]
+                
+                
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>mappingList</td>
+            <td>
+                
+                
+                    array[<a href="#/definitions/MappingGroup">MappingGroup</a>]
+                
+                
                 
             </td>
             <td>optional</td>
@@ -3185,19 +3456,6 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>nano</td>
-            <td>
-                
-                    
-                    integer (int32)
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
             <td>hour</td>
             <td>
                 
@@ -3237,10 +3495,75 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
+            <td>nano</td>
+            <td>
+                
+                    
+                    integer (int32)
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
             <td>chronology</td>
             <td>
                 
                     <a href="#/definitions/Chronology">Chronology</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/MappingGroup">MappingGroup</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>application</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>scopeString</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>vsReference</td>
+            <td>
+                
+                    <a href="#/definitions/VersionSetReference">VersionSetReference</a>
                     
                 
             </td>
@@ -3261,19 +3584,6 @@ Henge - REST Endpoints
         <th>description</th>
         <th>example</th>
     </tr>
-    
-        <tr>
-            <td>id</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
-        </tr>
     
         <tr>
             <td>name</td>
@@ -3315,45 +3625,6 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>version</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
-        </tr>
-    
-        <tr>
-            <td>createdDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>modifiedDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
             <td>propertyScopedValues</td>
             <td>
                 
@@ -3382,19 +3653,6 @@ Henge - REST Endpoints
     </tr>
     
         <tr>
-            <td>id</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
-        </tr>
-    
-        <tr>
             <td>name</td>
             <td>
                 
@@ -3405,6 +3663,19 @@ Henge - REST Endpoints
             <td>required</td>
             <td>Unique property-group name.</td>
             <td>pet-store-edge</td>
+        </tr>
+    
+        <tr>
+            <td>version</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Revision number of this entity.</td>
+            <td>1.1.0</td>
         </tr>
     
         <tr>
@@ -3434,31 +3705,16 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>properties</td>
-            <td>
-                
-                
-                    array[<a href="#/definitions/Property">Property</a>]
-                
-                
-                
-            </td>
-            <td>optional</td>
-            <td>The property-group's associated properties.</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>version</td>
+            <td>active</td>
             <td>
                 
                     
-                    integer (int64)
+                    boolean
                 
             </td>
             <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
+            <td>-</td>
+            <td></td>
         </tr>
     
         <tr>
@@ -3475,11 +3731,39 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>modifiedDate</td>
+            <td>properties</td>
             <td>
                 
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
+                
+                    array[<a href="#/definitions/Property">Property</a>]
+                
+                
+                
+            </td>
+            <td>optional</td>
+            <td>The property-group's associated properties.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/PropertyGroupReference">PropertyGroupReference</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>name</td>
+            <td>
+                
                     
+                    string
                 
             </td>
             <td>optional</td>
@@ -3488,11 +3772,11 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>active</td>
+            <td>version</td>
             <td>
                 
                     
-                    boolean
+                    string
                 
             </td>
             <td>optional</td>
@@ -3514,37 +3798,52 @@ Henge - REST Endpoints
     </tr>
     
         <tr>
-            <td>id</td>
+            <td>value</td>
             <td>
                 
                     
-                    integer (int64)
+                    string
                 
             </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
+            <td>required</td>
+            <td>A property-scoped-value's value.</td>
+            <td>Development-PetStore application.</td>
         </tr>
     
         <tr>
-            <td>version</td>
+            <td>scopeSet</td>
             <td>
                 
-                    
-                    integer (int64)
+                
+                    array[<a href="#/definitions/Scope">Scope</a>]
+                
+                
                 
             </td>
-            <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
+            <td>required</td>
+            <td>Set of unique scopes that identify when this value should be used to evaluate the property.</td>
+            <td></td>
         </tr>
     
+</table>
+
+## <a name="/definitions/Response">Response</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
         <tr>
-            <td>createdDate</td>
+            <td>status</td>
             <td>
                 
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
                     
+                    integer (int32)
                 
             </td>
             <td>optional</td>
@@ -3553,11 +3852,24 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>modifiedDate</td>
+            <td>entity</td>
             <td>
                 
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
                     
+                    object
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>metadata</td>
+            <td>
+                
+                    
+                    object
                 
             </td>
             <td>optional</td>
@@ -3579,20 +3891,7 @@ Henge - REST Endpoints
     </tr>
     
         <tr>
-            <td>id</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
-        </tr>
-    
-        <tr>
-            <td>name</td>
+            <td>key</td>
             <td>
                 
                     
@@ -3600,90 +3899,12 @@ Henge - REST Endpoints
                 
             </td>
             <td>required</td>
-            <td>Unique scope name.</td>
-            <td>environment</td>
+            <td>A single scope key.</td>
+            <td>env</td>
         </tr>
     
         <tr>
-            <td>ordinal</td>
-            <td>
-                
-                    
-                    integer (int32)
-                
-            </td>
-            <td>required</td>
-            <td>The scopes position in the set of scopes.</td>
-            <td>100</td>
-        </tr>
-    
-        <tr>
-            <td>version</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
-        </tr>
-    
-        <tr>
-            <td>createdDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>modifiedDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-</table>
-
-## <a name="/definitions/ScopeSchema">ScopeSchema</a>
-
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th>type</th>
-        <th>required</th>
-        <th>description</th>
-        <th>example</th>
-    </tr>
-    
-        <tr>
-            <td>id</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
-        </tr>
-    
-        <tr>
-            <td>name</td>
+            <td>value</td>
             <td>
                 
                     
@@ -3691,153 +3912,8 @@ Henge - REST Endpoints
                 
             </td>
             <td>required</td>
-            <td>Unique scope-schema name.</td>
-            <td>petstore-environments-scope-schema</td>
-        </tr>
-    
-        <tr>
-            <td>scopes</td>
-            <td>
-                
-                
-                    array[<a href="#/definitions/Scope">Scope</a>]
-                
-                
-                
-            </td>
-            <td>optional</td>
-            <td>Set of unique scopes associated with this scope-schema</td>
-            <td>environment, stack, sub-env</td>
-        </tr>
-    
-        <tr>
-            <td>version</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
-        </tr>
-    
-        <tr>
-            <td>createdDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>modifiedDate</td>
-            <td>
-                
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-</table>
-
-## <a name="/definitions/Search">Search</a>
-
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th>type</th>
-        <th>required</th>
-        <th>description</th>
-        <th>example</th>
-    </tr>
-    
-        <tr>
-            <td>results</td>
-            <td>
-                
-                
-                array[object]
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>searchString</td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>pageSize</td>
-            <td>
-                
-                    
-                    integer (int32)
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>pageNumber</td>
-            <td>
-                
-                    
-                    integer (int32)
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>totalCount</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>sortCols</td>
-            <td>
-                
-                
-                array[string]
-                
-            </td>
-            <td>optional</td>
-            <td>-</td>
-            <td></td>
+            <td>A single scope value.</td>
+            <td>dev</td>
         </tr>
     
 </table>
@@ -3854,19 +3930,6 @@ Henge - REST Endpoints
     </tr>
     
         <tr>
-            <td>id</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Unique identifier of this entity.</td>
-            <td>111</td>
-        </tr>
-    
-        <tr>
             <td>name</td>
             <td>
                 
@@ -3875,8 +3938,21 @@ Henge - REST Endpoints
                 
             </td>
             <td>required</td>
-            <td>Unique version-set name.</td>
-            <td>pet-store-application-version-set</td>
+            <td>Unique property-group name.</td>
+            <td>pet-store-edge</td>
+        </tr>
+    
+        <tr>
+            <td>version</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Revision number of this entity.</td>
+            <td>1.1.0</td>
         </tr>
     
         <tr>
@@ -3893,47 +3969,6 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>scope</td>
-            <td>
-                
-                    <a href="#/definitions/Scope">Scope</a>
-                    
-                
-            </td>
-            <td>required</td>
-            <td>scope that this version-set is associated with.</td>
-            <td>environment</td>
-        </tr>
-    
-        <tr>
-            <td>propertyGroups</td>
-            <td>
-                
-                
-                    array[<a href="#/definitions/PropertyGroup">PropertyGroup</a>]
-                
-                
-                
-            </td>
-            <td>required</td>
-            <td>The property-groups that are associated with this version-set.</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>version</td>
-            <td>
-                
-                    
-                    integer (int64)
-                
-            </td>
-            <td>optional</td>
-            <td>Revision number of this entity.</td>
-            <td>1.1.0</td>
-        </tr>
-    
-        <tr>
             <td>createdDate</td>
             <td>
                 
@@ -3947,11 +3982,67 @@ Henge - REST Endpoints
         </tr>
     
         <tr>
-            <td>modifiedDate</td>
+            <td>propertyGroupReferences</td>
             <td>
                 
-                    <a href="#/definitions/LocalDateTime">LocalDateTime</a>
+                
+                    array[<a href="#/definitions/PropertyGroupReference">PropertyGroupReference</a>]
+                
+                
+                
+            </td>
+            <td>required</td>
+            <td>The property-group references that are associated with this version-set.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>fileVersionReferences</td>
+            <td>
+                
+                
+                    array[<a href="#/definitions/FileVersionReference">FileVersionReference</a>]
+                
+                
+                
+            </td>
+            <td>optional</td>
+            <td>The file version references that are associated with this version-set.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/VersionSetReference">VersionSetReference</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>name</td>
+            <td>
+                
                     
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>version</td>
+            <td>
+                
+                    
+                    string
                 
             </td>
             <td>optional</td>
