@@ -275,6 +275,8 @@ To retrieve properties using https://github.com/Netflix/archaius[Netflix Archaiu
 </plugin>
 ----
 
+NOTE: For an example of using Archaius, see the *pom.xml* file for the *hello-properties* application, located in the */hello-properties* directory. 
+
 == Updating Properties
 
 Property values can be changed at any time, even while the application is running, by updating a PropertyGroup as well as the relevant VersionSets and Mappings. You don't have to rebuild or redeploy the application.

@@ -13,7 +13,7 @@ In this use case, we have a complex application that is made up of numerous micr
 * Properties for each microservice are stored in a PropertyGroup of type `APP` (one for each microservice).
 * Properties for each library are stored in a PropertyGroup of type `LIB` (one for each library).
 * The PropertyGroups are added to a VersionSet (one for each microservice). The VersionSet references all properties used by the microservice as well as any included libraries. (The VersionSet can also reference FileVersions--files with parsable data.)
-* The VersionSet is mapped to application (microservice) and scope (stack, region, and environment). For each application, a mapping is created for each relevant environment (such as *dev* and *prod*), region (such as *us-west-2*), and stack (such as *supersite* and *productpage*).
+* The VersionSet is mapped to application (microservice) and scope (stack, region, and environment). For each application, a mapping is created for each relevant environment (such as *dev* and *prod*), region (such as *us-west-2*), and stack (such as *supersite* and *powerpage*).
 
 . At runtime, each microservice requests properties from the Henge service using a URL. The URL includes the application name and (optionally) the environment, region, and stack as query parameters.
 
@@ -300,6 +300,8 @@ To retrieve properties using https://github.com/Netflix/archaius[Netflix Archaiu
     </configuration>
 </plugin>
 ----
+
+NOTE: For an example of using Archaius, see the *pom.xml* file for the *hello-properties* application, located in the */hello-properties* directory. 
 
 == Updating Properties
 
